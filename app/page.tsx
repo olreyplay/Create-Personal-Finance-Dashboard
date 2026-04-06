@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import TransactionForm from "@/components/TransactionForm";
+import TransactionCard from "@/components/TransactionCard";
 
 type Transaction = {
   id: number;
@@ -49,22 +50,10 @@ export default function Home() {
 
             <div className="mt-5 space-y-3">
               {transactions.map((transaction) => (
-                <div
+                <TransactionCard
                   key={transaction.id}
-                  className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3"
-                >
-                  <p className="font-medium text-slate-900">
-                    {transaction.title}
-                  </p>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    {transaction.category} • {transaction.type}
-                  </p>
-
-                  <p className="mt-2 text-sm font-semibold text-slate-900">
-                    ${transaction.amount}
-                  </p>
-                </div>
+                  transaction={transaction}
+                />
               ))}
             </div>
           </div>
