@@ -5,6 +5,7 @@ import CategoryFilter from "@/components/CategoryFilter";
 import MonthFilter from "@/components/MonthFilter";
 import TransactionForm from "@/components/TransactionForm";
 import TransactionCard from "@/components/TransactionCard";
+import FinanceChart from "@/components/FinanceChart";
 
 type Transaction = {
   id: number;
@@ -90,6 +91,10 @@ export default function Home() {
           >
             ${balance.toLocaleString()}
           </h2>
+        </div>
+
+        <div className="mb-6">
+          <FinanceChart transactions={transactions} />
         </div>
 
         <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
