@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import CategoryFilter from "@/components/CategoryFilter";
 import TransactionForm from "@/components/TransactionForm";
 import TransactionCard from "@/components/TransactionCard";
 
@@ -16,6 +17,7 @@ const categories = ["Food", "Rent", "Salary", "Transport", "Entertainment"];
 
 export default function Home() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleAddTransaction = (transaction: Omit<Transaction, "id">) => {
     const newTransaction = {
@@ -34,6 +36,12 @@ export default function Home() {
       ? total + transaction.amount
       : total - transaction.amount;
   }, 0);
+
+  const filteredTransactions = selectedCategory
+    ? transactions.filter(
+        (transaction) => transaction.category === selectedCategory,
+      )
+    : transactions;
 
   return (
     <main className="min-h-screen bg-slate-50">
@@ -60,6 +68,14 @@ export default function Home() {
           </h2>
         </div>
 
+        <div className="mb-6">
+          <CategoryFilter
+            value={selectedCategory}
+            onChange={setSelectedCategory}
+            categories={categories}
+          />
+        </div>
+
         <div className="grid gap-6 lg:grid-cols-[380px,1fr]">
           <TransactionForm
             onAddTransaction={handleAddTransaction}
@@ -72,7 +88,7 @@ export default function Home() {
             </h2>
 
             <div className="mt-5 space-y-3">
-              {transactions.map((transaction) => (
+              {filteredTransactions.map((transaction) => (
                 <TransactionCard
                   key={transaction.id}
                   transaction={transaction}
