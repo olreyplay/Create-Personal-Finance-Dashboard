@@ -110,20 +110,31 @@ export default function Home() {
             onAddTransaction={handleAddTransaction}
             categories={categories}
           />
-
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="text-lg font-semibold text-slate-900">
               Transactions
             </h2>
 
-            <div className="mt-5 space-y-3">
-              {filteredTransactions.map((transaction) => (
-                <TransactionCard
-                  key={transaction.id}
-                  transaction={transaction}
-                />
-              ))}
-            </div>
+            {filteredTransactions.length > 0 ? (
+              <div className="mt-5 space-y-3">
+                {filteredTransactions.map((transaction) => (
+                  <TransactionCard
+                    key={transaction.id}
+                    transaction={transaction}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="mt-5 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center">
+                <h3 className="text-base font-semibold text-slate-900">
+                  No Transactions Found
+                </h3>
+
+                <p className="mt-2 text-sm text-slate-500">
+                  Try changing your filters or add a new transaction.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
