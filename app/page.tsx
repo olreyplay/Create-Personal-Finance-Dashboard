@@ -12,6 +12,8 @@ type Transaction = {
   category: string;
 };
 
+const categories = ["Food", "Rent", "Salary", "Transport", "Entertainment"];
+
 export default function Home() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
@@ -59,7 +61,10 @@ export default function Home() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[380px,1fr]">
-          <TransactionForm onAddTransaction={handleAddTransaction} />
+          <TransactionForm
+            onAddTransaction={handleAddTransaction}
+            categories={categories}
+          />
 
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="text-lg font-semibold text-slate-900">

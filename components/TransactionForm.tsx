@@ -9,10 +9,12 @@ type TransactionFormProps = {
     type: string;
     category: string;
   }) => void;
+  categories: string[];
 };
 
 export default function TransactionForm({
   onAddTransaction,
+  categories,
 }: TransactionFormProps) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -74,11 +76,11 @@ export default function TransactionForm({
             onChange={(e) => setCategory(e.target.value)}
             className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500"
           >
-            <option value="Food">Food</option>
-            <option value="Rent">Rent</option>
-            <option value="Salary">Salary</option>
-            <option value="Transport">Transport</option>
-            <option value="Entertainment">Entertainment</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
           </select>
         </div>
 
