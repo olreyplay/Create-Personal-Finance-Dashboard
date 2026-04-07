@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryFilter from "@/components/CategoryFilter";
 import MonthFilter from "@/components/MonthFilter";
 import TransactionForm from "@/components/TransactionForm";
@@ -21,6 +21,18 @@ export default function Home() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
+
+  useEffect(() => {
+    const savedTransactions = localStorage.getItem("transactions");
+
+    if (savedTransactions) {
+      setTransactions(JSON.parse(savedTransactions));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
 
   const handleAddTransaction = (transaction: Omit<Transaction, "id">) => {
     const newTransaction = {
@@ -110,6 +122,7 @@ export default function Home() {
             onAddTransaction={handleAddTransaction}
             categories={categories}
           />
+
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="text-lg font-semibold text-slate-900">
               Transactions
