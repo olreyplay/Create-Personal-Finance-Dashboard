@@ -34,6 +34,11 @@ export default function Home() {
     ]);
   };
 
+  const handleResetFilters = () => {
+    setSelectedCategory("");
+    setSelectedMonth("");
+  };
+
   const balance = transactions.reduce((total, transaction) => {
     return transaction.type === "income"
       ? total + transaction.amount
@@ -75,14 +80,29 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="mb-6 grid gap-4 md:grid-cols-2">
-          <CategoryFilter
-            value={selectedCategory}
-            onChange={setSelectedCategory}
-            categories={categories}
-          />
+        <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="grid gap-4 md:grid-cols-2">
+            <CategoryFilter
+              value={selectedCategory}
+              onChange={setSelectedCategory}
+              categories={categories}
+            />
 
-          <MonthFilter value={selectedMonth} onChange={setSelectedMonth} />
+            <MonthFilter value={selectedMonth} onChange={setSelectedMonth} />
+          </div>
+
+          <div className="mt-4 flex flex-col gap-3 border-t border-slate-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-slate-500">
+              Showing {filteredTransactions.length} transactions
+            </p>
+
+            <button
+              onClick={handleResetFilters}
+              className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+            >
+              Reset Filters
+            </button>
+          </div>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[380px,1fr]">
