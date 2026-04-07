@@ -5,6 +5,7 @@ type TransactionCardProps = {
     amount: number;
     type: string;
     category: string;
+    date: string;
   };
 };
 
@@ -18,7 +19,7 @@ export default function TransactionCard({ transaction }: TransactionCardProps) {
           <h3 className="font-medium text-slate-900">{transaction.title}</h3>
 
           <p className="mt-1 text-sm text-slate-500">
-            {transaction.category} • {transaction.type}
+            {transaction.category} • {transaction.type} • {transaction.date}
           </p>
         </div>
 

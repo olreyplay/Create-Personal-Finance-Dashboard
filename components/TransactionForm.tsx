@@ -8,6 +8,7 @@ type TransactionFormProps = {
     amount: number;
     type: string;
     category: string;
+    date: string;
   }) => void;
   categories: string[];
 };
@@ -20,6 +21,7 @@ export default function TransactionForm({
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("expense");
   const [category, setCategory] = useState("Food");
+  const [date, setDate] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +31,14 @@ export default function TransactionForm({
       amount: Number(amount),
       type,
       category,
+      date,
     });
+
+    setTitle("");
+    setAmount("");
+    setType("expense");
+    setCategory(categories[0]);
+    setDate("");
 
     setTitle("");
     setAmount("");
@@ -83,6 +92,13 @@ export default function TransactionForm({
             ))}
           </select>
         </div>
+
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500"
+        />
 
         <button
           type="submit"

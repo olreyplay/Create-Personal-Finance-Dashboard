@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CategoryFilter from "@/components/CategoryFilter";
+import MonthFilter from "@/components/MonthFilter";
 import TransactionForm from "@/components/TransactionForm";
 import TransactionCard from "@/components/TransactionCard";
 
@@ -11,6 +12,7 @@ type Transaction = {
   amount: number;
   type: string;
   category: string;
+  date: string;
 };
 
 const categories = ["Food", "Rent", "Salary", "Transport", "Entertainment"];
@@ -18,6 +20,7 @@ const categories = ["Food", "Rent", "Salary", "Transport", "Entertainment"];
 export default function Home() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
 
   const handleAddTransaction = (transaction: Omit<Transaction, "id">) => {
     const newTransaction = {
@@ -37,11 +40,15 @@ export default function Home() {
       : total - transaction.amount;
   }, 0);
 
-  const filteredTransactions = selectedCategory
-    ? transactions.filter(
-        (transaction) => transaction.category === selectedCategory,
-      )
-    : transactions;
+  const filteredTransactions = transactions.filter((transaction) => {
+    const matchesCategory =
+      selectedCategory === "" || transaction.category === selectedCategory;
+
+    const matchesMonth =
+      selectedMonth === "" || transaction.date.startsWith(selectedMonth);
+
+    return matchesCategory && matchesMonth;
+  });
 
   return (
     <main className="min-h-screen bg-slate-50">
@@ -68,12 +75,14 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="mb-6">
+        <div className="mb-6 grid gap-4 md:grid-cols-2">
           <CategoryFilter
             value={selectedCategory}
             onChange={setSelectedCategory}
             categories={categories}
           />
+
+          <MonthFilter value={selectedMonth} onChange={setSelectedMonth} />
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[380px,1fr]">
